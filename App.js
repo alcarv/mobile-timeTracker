@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, TouchableHighlight, TextInput } from 'react-native';
 import axios from 'axios';
+const url = require('./environments')
 
 export default function App() {
 
