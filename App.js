@@ -14,7 +14,7 @@ export default function App() {
     if(login == '' || login == undefined || senha == '' || senha == undefined){
       alert('Preencha os campos!');
     }else{
-      axios.post(`${url.dev}/auth/consumidor/login`, { 
+      axios.post('http://192.168.0.119:3000/auth/consumidor/login', { 
       "email": login, 
       "pswd": senha
     }).then(res => {
@@ -32,7 +32,7 @@ export default function App() {
         <Text style={styles.LoginText}>Seus horários na palma da mão</Text>
         <View style={styles.loginInputView} >
           <TextInput style={styles.loginInput} placeholderTextColor="black" placeholder="Login" onChangeText={text => login = text} value={login}></TextInput>
-          <TextInput style={styles.loginInput} placeholderTextColor="black" placeholder="Senha" onChangeText={text => senha = text} value={senha}></TextInput>
+          <TextInput secureTextEntry={true} style={styles.loginInput} placeholderTextColor="black" placeholder="Senha" onChangeText={text => senha = text} value={senha}></TextInput>
         </View>
         <TouchableHighlight onPress={clickLogin} style={styles.botaoLogin}>
           <Text style={styles.botaoLoginText}>Login</Text>
