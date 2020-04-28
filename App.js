@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, TouchableHighlight, TextInput } from 'react-native';
 import axios from 'axios';
+const url = require('./environments')
 
 export default function App() {
 
@@ -13,7 +14,7 @@ export default function App() {
     if(login == '' || login == undefined || senha == '' || senha == undefined){
       alert('Preencha os campos!');
     }else{
-      axios.post('http://192.168.191.241:3000/auth/consumidor/login', { 
+      axios.post(`${url.dev}/auth/consumidor/login`, { 
       "email": login, 
       "pswd": senha
     }).then(res => {
