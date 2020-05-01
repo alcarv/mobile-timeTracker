@@ -2,62 +2,98 @@ import { StyleSheet, Text, View, ImageBackground, TouchableHighlight, TextInput 
 import React, { useState, Component } from 'react';
 import axios from 'axios';
 const url = require('../../environments')
+import {connect} from 'react-redux'
+import {Login} from '../../redux/actions/auth'
 
-export default function LoginComponent({navigation}){
-    const[user, setUser] = useState('Consumidor');
+class LoginComponent extends React.Component {
 
-    let login;
-    let senha;
+    constructor(props) {
+      super(props);
+      this.state = {
+        user: 'Consumidor',
+        login: '',
+        senha: ''
+      };
+    }
 
-
-    function clickLogin() {
-      if(login == '' || login == undefined || senha == '' || senha == undefined){
+    clickLogin = () => {
+      if(this.state.login == '' || this.state.login == undefined || this.state.senha == '' || this.state.senha == undefined){
         alert('Preencha os campos!');
       }else{
-        axios.post(`${url.dev}/auth/consumidor/login`, { 
-        "email": login, 
-        "pswd": senha
-      }).then(res => {
-        if(res.data.length > 0){
-          navigation.navigate('ConsumerHome');
+        if(this.state.user == 'Consumidor'){
+          axios.post(`${url.dev}/auth/consumidor/login`, { 
+            "email": this.state.login, 
+            "pswd": this.state.senha
+          }).then(res => {
+            if(res.data.length > 0){
+              this.props.logar({
+                nome: res.data[0].nome,
+                email: res.data[0].email
+              })
+              this.props.navigation.navigate('ConsumerHome');
+            }else{
+              alert('E-mail ou Senha inválidos. Caso não possua cadastro, cadastre-se abaixo');
+            }
+          }).catch(err => {
+            console.log(err);
+          })
         }else{
-          alert('E-mail ou Senha inválidos. Caso não possua cadastro, cadastre-se abaixo');
+          axios.post(`${url.dev}/auth/estabelecimento/login`, { 
+            "email": this.state.login, 
+            "pswd": this.state.senha
+          }).then(res => {
+            if(res.data.length > 0){ 
+              this.props.logar({
+                nome: res.data[0].nome,
+                email: res.data[0].email
+              })
+              this.props.navigation.navigate('EstabelecimentoHome');
+            }else{
+              alert('E-mail ou Senha inválidos. Caso não possua cadastro, cadastre-se abaixo');
+            }
+          }).catch(err => {
+            console.log(err);
+          })
         }
-      }).catch(err => {
-        console.log(err);
-      })
       }
     }
 
-    let clickSwitch = () =>{
-        if(user == 'Consumidor'){
-            setUser('Estabelecimento');
+    clickSwitch = () =>{
+        if(this.state.user == 'Consumidor'){
+            this.setState({
+              user: 'Estabelecimento'
+            });
         }else{
-            setUser('Consumidor');
+          this.setState({
+            user: 'Consumidor'
+          });
         }
     }
 
-    return(
-        <ImageBackground source={require('../../assets/background_cropped.jpg')} style={styles.container}>
-        <Text style={styles.logo}>Time Tracker</Text>
-        <View style={styles.login}> 
-          <Text style={styles.LoginText}>Seus horários na palma da mão</Text>
-          <TouchableHighlight underlayColor="#ff5448" onPress={clickSwitch} style={styles.botaoSwitch}>
-            <Text>{user}</Text>
-          </TouchableHighlight>
-          <View style={styles.loginInputView} >
-            <TextInput style={styles.loginInput} placeholderTextColor="black" placeholder="Login" onChangeText={text => login = text} value={login}></TextInput>
-            <TextInput secureTextEntry={true} style={styles.loginInput} placeholderTextColor="black" placeholder="Senha" onChangeText={text => senha = text} value={senha}></TextInput>
-          </View>
-          <TouchableHighlight underlayColor="#ff5448" onPress={clickLogin} style={styles.botaoLogin}>
-            <Text style={styles.botaoLoginText}>Login</Text>
-          </TouchableHighlight>
-        </View> 
-      </ImageBackground>
-    );
+    render() {
+        return(
+          <ImageBackground source={require('../../assets/background_cropped.jpg')} style={styles.container}>
+          <Text style={styles.logo}>Time Tracker</Text>
+          <View style={styles.login}> 
+            <Text style={styles.LoginText}>Seus horários na palma da mão</Text>
+            <TouchableHighlight underlayColor="#ff5448" onPress={this.clickSwitch} style={styles.botaoSwitch}> 
+              <Text>{this.state.user}</Text>
+            </TouchableHighlight>
+            <View style={styles.loginInputView} >
+              <TextInput style={styles.loginInput} placeholderTextColor="black" placeholder="Login" onChangeText={text => this.setState({login: text})} value={this.state.login}></TextInput>
+              <TextInput secureTextEntry={true} style={styles.loginInput} placeholderTextColor="black" placeholder="Senha" onChangeText={text => this.setState({senha: text})} value={this.state.senha}></TextInput>
+            </View>
+            <TouchableHighlight underlayColor="#ff5448" onPress={this.clickLogin.bind(this)} style={styles.botaoLogin}>
+              <Text style={styles.botaoLoginText}>Login</Text>
+            </TouchableHighlight> 
+          </View> 
+        </ImageBackground> 
+      )
+    }
+
 }
 
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     container: {
       width: '100%', 
       height: '100%',
@@ -125,3 +161,11 @@ const styles = StyleSheet.create({
       justifyContent: "center"
     }
   });
+
+  const mapDispatchtoProps = (dispatch) => {
+    return {
+      logar: (user) => dispatch(Login(user))
+    }
+  }
+
+  export default connect(null, mapDispatchtoProps)(LoginComponent);

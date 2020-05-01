@@ -1,2 +1,2 @@
-export const dev = 'http://192.168.191.241:3000';
+export const dev = 'http://192.168.0.59:3000';
 export const prod = '';
