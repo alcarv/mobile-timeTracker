@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, ImageBackground, TouchableHighlight, TextInput } from 'react-native';
 import React, { useState, Component } from 'react';
 import axios from 'axios';
-const url = require('../../environments')
 import {connect} from 'react-redux'
 import {Login} from '../../redux/actions/auth'
+
+const url = require('../../environments')
 
 class LoginComponent extends React.Component {
 
