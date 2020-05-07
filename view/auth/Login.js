@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, ImageBackground, TouchableHighlight, TextInput } from 'react-native';
 import React, { useState, Component } from 'react';
 import axios from 'axios';
-const url = require('../../environments')
 import {connect} from 'react-redux'
 import {Login} from '../../redux/actions/auth'
+
+const url = require('../../environments')
 
 class LoginComponent extends React.Component {
 
@@ -83,7 +84,7 @@ class LoginComponent extends React.Component {
               <TextInput style={styles.loginInput} placeholderTextColor="black" placeholder="Login" onChangeText={text => this.setState({login: text})} value={this.state.login}></TextInput>
               <TextInput secureTextEntry={true} style={styles.loginInput} placeholderTextColor="black" placeholder="Senha" onChangeText={text => this.setState({senha: text})} value={this.state.senha}></TextInput>
             </View>
-            <TouchableHighlight underlayColor="#ff5448" onPress={this.clickLogin.bind(this)} style={styles.botaoLogin}>
+            <TouchableHighlight underlayColor="#ff5448" onPress={this.clickLogin} style={styles.botaoLogin}>
               <Text style={styles.botaoLoginText}>Login</Text>
             </TouchableHighlight> 
           </View> 
