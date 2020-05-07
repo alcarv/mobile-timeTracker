@@ -1,9 +1,13 @@
-import { LOGIN, LOGOUT } from '../actions/types';
+import { LOGIN, LOGOUT, SELECT_TYPE } from '../actions/types';
 
 const initialState = {
     loggedUser: {
         email: '',
         nome: ''
+    },
+    selectedType: {
+        nome: '',
+        url: ''
     }
 }
 
@@ -21,6 +25,11 @@ const authReducer = (state = initialState, action) => {
                     email: '',
                     nome: ''
                 }
+            }
+        case SELECT_TYPE:
+            return {
+                ...state,
+                selectedType: action.data
             }
         default:
             return state;

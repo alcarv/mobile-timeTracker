@@ -84,7 +84,7 @@ class LoginComponent extends React.Component {
               <TextInput style={styles.loginInput} placeholderTextColor="black" placeholder="Login" onChangeText={text => this.setState({login: text})} value={this.state.login}></TextInput>
               <TextInput secureTextEntry={true} style={styles.loginInput} placeholderTextColor="black" placeholder="Senha" onChangeText={text => this.setState({senha: text})} value={this.state.senha}></TextInput>
             </View>
-            <TouchableHighlight underlayColor="#ff5448" onPress={this.clickLogin.bind(this)} style={styles.botaoLogin}>
+            <TouchableHighlight underlayColor="#ff5448" onPress={this.clickLogin} style={styles.botaoLogin}>
               <Text style={styles.botaoLoginText}>Login</Text>
             </TouchableHighlight> 
           </View> 
