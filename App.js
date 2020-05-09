@@ -6,6 +6,7 @@ import LoginComponent from './view/auth/Login';
 import ConsumerHomeComponent from './view/Consumer/Home';
 import EstabelecimentoHomeComponent from './view/Estabelecimento/Home';
 import EstabelecimentosPorTipo from './view/Consumer/EstabelecimentosPorTipo';
+import EstabelecimentoInfos from './view/Consumer/Estabelecimento'
 import { Provider } from 'react-redux';
 
 import configureStore from './redux/store'
@@ -22,6 +23,7 @@ export default function App() {
           <Stack.Screen name=" " component={LoginComponent} />
           <Stack.Screen name="ConsumerHome" component={ConsumerHomeComponent} />
           <Stack.Screen name="PorTipo" component={EstabelecimentosPorTipo} />
+          <Stack.Screen name="infosEstab" component={EstabelecimentoInfos} />
           <Stack.Screen name="EstabelecimentoHome" component={EstabelecimentoHomeComponent} />
         </Stack.Navigator> 
       </NavigationContainer>
