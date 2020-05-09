@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SELECT_TYPE } from '../actions/types';
+import { LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB } from '../actions/types';
 
 const initialState = {
     loggedUser: {
@@ -8,7 +8,8 @@ const initialState = {
     selectedType: {
         nome: '',
         url: ''
-    }
+    },
+    selectedEstab: {}
 }
 
 const authReducer = (state = initialState, action) => {
@@ -30,6 +31,11 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 selectedType: action.data
+            }
+        case SELECT_ESTAB:
+            return {
+                ...state,
+                selectedEstab: action.data
             }
         default:
             return state;
