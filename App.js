@@ -10,6 +10,7 @@ import EstabelecimentoInfos from './view/Consumer/Estabelecimento'
 import { Provider } from 'react-redux';
 
 import configureStore from './redux/store'
+import HorariosComponent from './view/Consumer/Horarios';
 
 const Stack = createStackNavigator();
 const store = configureStore();
@@ -24,6 +25,7 @@ export default function App() {
           <Stack.Screen name="ConsumerHome" component={ConsumerHomeComponent} />
           <Stack.Screen name="PorTipo" component={EstabelecimentosPorTipo} />
           <Stack.Screen name="infosEstab" component={EstabelecimentoInfos} />
+          <Stack.Screen name="horarios" component={HorariosComponent} />
           <Stack.Screen name="EstabelecimentoHome" component={EstabelecimentoHomeComponent} />
         </Stack.Navigator> 
       </NavigationContainer>
