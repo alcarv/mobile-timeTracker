@@ -1,4 +1,5 @@
-import { LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB } from '../actions/types';
+import { LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB, ALTER_CALENDAR } from '../actions/types';
+import { createCalendarArray } from '../../view/shared/CalendarProcessor';
 
 const initialState = {
     loggedUser: {
@@ -9,7 +10,12 @@ const initialState = {
         nome: '',
         url: ''
     },
-    selectedEstab: {}
+    selectedEstab: {},
+    calendar:{
+        dia: new Date().getDate(),
+        mes: new Date().getMonth() + 1
+    },
+    tiles: []
 }
 
 const authReducer = (state = initialState, action) => {
@@ -35,7 +41,22 @@ const authReducer = (state = initialState, action) => {
         case SELECT_ESTAB:
             return {
                 ...state,
-                selectedEstab: action.data
+                selectedEstab: action.data,
+                calendar:{
+                    dia: new Date().getDate(),
+                    mes: new Date().getMonth() + 1
+                },
+                tiles: createCalendarArray(action.data.configuracoes.inicio, action.data.configuracoes.fim, action.data.configuracoes.duracao, action.data.horarios.filter(horario => {
+                    return ((new Date(horario.dia).getDate() == new Date().getDate()) && ((new Date(horario.dia).getMonth() + 1) == (new Date().getMonth() + 1)))
+                }))
+            }
+        case ALTER_CALENDAR:
+            return {
+                ...state,
+                calendar: action.data,
+                tiles: createCalendarArray(state.selectedEstab.configuracoes.inicio, state.selectedEstab.configuracoes.fim, state.selectedEstab.configuracoes.duracao, state.selectedEstab.horarios.filter(horario => {
+                    return ((new Date(horario.dia).getDate() == action.data.dia) && ((new Date(horario.dia).getMonth() + 1) == action.data.mes))
+                }))
             }
         default:
             return state;
