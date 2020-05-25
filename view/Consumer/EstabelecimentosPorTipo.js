@@ -51,7 +51,7 @@ class EstabelecimentoPorTipoComponent extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <Headercomponent titulo={this.props.selectedType.nome} ></Headercomponent>  
+                <Headercomponent navigation={this.props.navigation} init={false} titulo={this.props.selectedType.nome} ></Headercomponent>  
                 <View style={styles.search}>
                     <TextInput maxLength={20} style={styles.buscaInput} placeholderTextColor="black" placeholder="Filtre seus locais favoritos" 
                     onChangeText={text => this.changeSearch(text)} value={this.state.busca}></TextInput>

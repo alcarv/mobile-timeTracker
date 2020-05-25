@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB, ALTER_CALENDAR} from './types'
+import {LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB, ALTER_CALENDAR, SELECTED_HORARIO} from './types'
 
 export const Login = (user) => (
     {
@@ -31,5 +31,12 @@ export const Altercalendar = (calendar) => (
     {
         type: ALTER_CALENDAR,
         data: calendar
+    }
+)
+
+export const SelectHorario = (infoHorario) => (
+    {
+        type: SELECTED_HORARIO,
+        data: infoHorario
     }
 )

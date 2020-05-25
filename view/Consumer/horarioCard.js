@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableHighlight, Text, Image } from "react-native";
+import { connect } from 'react-redux';
+import { SelectHorario } from "../../redux/actions/auth";
 
 class HorarioCard extends Component{
 
@@ -8,14 +10,18 @@ class HorarioCard extends Component{
     }
 
     navegar = () => {
-        
+        this.props.selecionar({
+            hora: this.props.item.inicioHora + ':' + this.props.item.inicioMinuto,
+            data: this.props.calendar.dia + '/' + this.props.calendar.mes
+        })
+        this.props.navigation.navigate('infosAgend');
     }
 
     render(){
         if(this.props.item.reservado){
             return(
                 <View style={styles.container}>
-                    <TouchableHighlight underlayColor="#B8B6B4" style={styles.cardTouchReservado} onPress={this.navegar}>
+                    <TouchableHighlight underlayColor="#B8B6B4" style={styles.cardTouchReservado}>
                         <View style={styles.viewReservado}>
                             <Text>{this.props.item.inicioHora + ':' + this.props.item.inicioMinuto + ' - ' + this.props.item.fimHora + ':' + this.props.item.fimMinuto}</Text>
                             <Text style={styles.textIndisp}>Indisponível</Text>
@@ -105,4 +111,16 @@ const styles = StyleSheet.create({
     }
 });
 
-export default HorarioCard;
+const mapDispatchtoProps = (dispatch) => {
+    return {
+        selecionar: (infoHorario) => dispatch(SelectHorario(infoHorario))
+    }
+}
+
+const mapStatetoProps = (state) => {
+    return {
+        calendar: state.authReducer.calendar
+    }
+}
+
+export default connect(mapStatetoProps, mapDispatchtoProps)(HorarioCard);
