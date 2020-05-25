@@ -1,68 +1,66 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { TouchableHighlight } from "react-native-gesture-handler";
+import { connect } from 'react-redux';
+import { Altercalendar } from "../../redux/actions/auth";
 
 class Calendarcomponent extends Component{
     constructor(props){
         super(props);
-        this.state = {
-            dia: new Date().getDate() - 1,
-            mes: new Date().getMonth() + 1
-        }
     }
 
     addDay = () => {
-        if(this.state.dia == 31){
-            this.setState({
+        if(this.props.calendar.dia == 31){
+            this.props.alterar({
                 dia: 1,
-                mes: this.state.mes + 1
+                mes: this.props.calendar.mes + 1
             })
         }else{
-            this.setState({
-                dia: this.state.dia + 1,
-                mes: this.state.mes
+            this.props.alterar({
+                dia: this.props.calendar.dia + 1,
+                mes: this.props.calendar.mes
             })
         }
     }
 
     subDay = () => {
-        if(this.state.dia == 1){
-            this.setState({
+        if(this.props.calendar.dia == 1){
+            this.props.alterar({
                 dia: 31,
-                mes: this.state.mes - 1
+                mes: this.props.calendar.mes - 1
             })
         }else{
-            this.setState({
-                dia: this.state.dia - 1,
-                mes: this.state.mes
+            this.props.alterar({
+                dia: this.props.calendar.dia - 1,
+                mes: this.props.calendar.mes
             })
         }
     }
 
     addMonth = () => {
-        if(this.state.mes == 12){
-            this.setState({
-                dia: this.state.dia,
+        if(this.props.calendar.mes == 12){
+            this.props.alterar({
+                dia: this.props.calendar.dia,
                 mes: 1
             })
         }else{
-            this.setState({
-                dia: this.state.dia,
-                mes: this.state.mes + 1
+            this.props.alterar({
+                dia: this.props.calendar.dia,
+                mes: this.props.calendar.mes + 1
             })
         }
     }
 
     subMonth = () => {
-        if(this.state.mes == 1){
-            this.setState({
-                dia: this.state.dia,
+        if(this.props.calendar.mes == 1){
+            this.props.alterar({
+                dia: this.props.calendar.dia,
                 mes: 12
             })
         }else{
-            this.setState({
-                dia: this.state.dia,
-                mes: this.state.mes - 1
+            this.props.alterar({
+                dia: this.props.calendar.dia,
+                mes: this.props.calendar.mes - 1
             })
         }
     }
@@ -75,7 +73,7 @@ class Calendarcomponent extends Component{
                     <TouchableHighlight onPress={this.addDay} underlayColor="#ff5448">
                         <Image style={styles.setas} source={require('../../assets/seta_cima_branca.png')}/>
                     </TouchableHighlight>  
-                        <Text style={styles.calendarText}>{this.state.dia}</Text>
+                        <Text style={styles.calendarText}>{this.props.calendar.dia}</Text>
                     <TouchableHighlight onPress={this.subDay} underlayColor="#ff5448">
                         <Image style={styles.setas} source={require('../../assets/seta_baixo_branca.png')}/>
                     </TouchableHighlight>  
@@ -85,7 +83,7 @@ class Calendarcomponent extends Component{
                     <TouchableHighlight onPress={this.addMonth} underlayColor="#ff5448">
                         <Image style={styles.setas} source={require('../../assets/seta_cima_branca.png')}/>
                     </TouchableHighlight>  
-                        <Text style={styles.calendarText}>{this.state.mes}</Text>
+                        <Text style={styles.calendarText}>{this.props.calendar.mes}</Text>
                     <TouchableHighlight onPress={this.subMonth} underlayColor="#ff5448">
                         <Image style={styles.setas} source={require('../../assets/seta_baixo_branca.png')}/>
                     </TouchableHighlight>  
@@ -102,8 +100,9 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: 'space-around',
         backgroundColor: '#FF473A',
-        backgroundColor: 'red'
+        width: '80%'
     },
     calendarLabel: {
         fontSize: 32,
@@ -124,4 +123,16 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Calendarcomponent;
+const mapStatetoProps = (state) => {
+    return {
+        calendar: state.authReducer.calendar
+    }
+}
+
+const mapDispatchtoProps = (dispatch) => {
+    return {
+      alterar: (calendar) => dispatch(Altercalendar(calendar))
+    }
+  }
+
+export default connect(mapStatetoProps, mapDispatchtoProps)(Calendarcomponent);

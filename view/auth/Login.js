@@ -22,7 +22,7 @@ class LoginComponent extends React.Component {
         alert('Preencha os campos!');
       }else{
         if(this.state.user == 'Consumidor'){
-          axios.post(`${url.dev}/auth/consumidor/login`, { 
+          axios.post(`${url.prod}/auth/consumidor/login`, { 
             "email": this.state.login, 
             "pswd": this.state.senha
           }).then(res => {
@@ -39,7 +39,7 @@ class LoginComponent extends React.Component {
             console.log(err);
           })
         }else{
-          axios.post(`${url.dev}/auth/estabelecimento/login`, { 
+          axios.post(`${url.prod}/auth/estabelecimento/login`, { 
             "email": this.state.login, 
             "pswd": this.state.senha
           }).then(res => {

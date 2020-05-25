@@ -4,35 +4,29 @@ import Headercomponent from '../shared/header';
 import Calendarcomponent from './Calendarcomponent';
 import { connect } from 'react-redux';
 import { createCalendarArray } from '../shared/CalendarProcessor';
+import HorarioCard from './horarioCard';
 
 
 class HorariosComponent extends Component{
 
     constructor(props) {
         super(props);
-        this.state = {
-            tiles: []
-        };
-    }
-
-    componentDidMount(){
-        this.setState({
-            tiles: createCalendarArray(this.props.selectedEstab.configuracoes.inicio, this.props.selectedEstab.configuracoes.fim, this.props.selectedEstab.configuracoes.duracao)
-        })
     }
 
     render(){
         return (
             <View style={styles.container}>
-                <Headercomponent cor="branco" titulo="Escolha um horário" />
+                <View style={styles.header}>
+                    <Headercomponent cor="branco" titulo="Escolha um horário" />
+                </View>
                 <Calendarcomponent/>
                 <SafeAreaView style={styles.safeView}>
                     <FlatList
                         numColumns={2}
                         columnWrapperStyle={styles.list}
                         ItemSeparatorComponent={() => <Text></Text>}
-                        data={this.state.tiles}
-                        renderItem={({ item }) => <Text>ok</Text>}
+                        data={this.props.tiles}
+                        renderItem={({ item }) => <HorarioCard item={item}></HorarioCard>}
                         keyExtractor={item => item._id}
                     />
                 </SafeAreaView>
@@ -47,23 +41,27 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: 'center',
-        height: '96%',
-        marginTop: '8%',
+        justifyContent: 'space-around',
+        height: '100%',
         backgroundColor: '#FF473A'
     },
+    header:{
+        marginTop: '5%'
+    },  
     list:{
         justifyContent: "space-around"
     },
     safeView: {
-        height: '80%',
+        height: '65%',
         width: '100%'
     }
 })
 
 const mapStatetoProps = (state) => {
     return {
-        selectedEstab: state.authReducer.selectedEstab
+        selectedEstab: state.authReducer.selectedEstab,
+        calendar: state.authReducer.calendar,
+        tiles: state.authReducer.tiles
     }
 }
 
