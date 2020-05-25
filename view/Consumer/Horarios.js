@@ -17,7 +17,7 @@ class HorariosComponent extends Component{
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Headercomponent cor="branco" titulo="Escolha um horário" />
+                    <Headercomponent navigation={this.props.navigation} init={false} cor="branco" titulo="Escolha um horário" />
                 </View>
                 <Calendarcomponent/>
                 <SafeAreaView style={styles.safeView}>
@@ -26,7 +26,7 @@ class HorariosComponent extends Component{
                         columnWrapperStyle={styles.list}
                         ItemSeparatorComponent={() => <Text></Text>}
                         data={this.props.tiles}
-                        renderItem={({ item }) => <HorarioCard item={item}></HorarioCard>}
+                        renderItem={({ item }) => <HorarioCard navigation={this.props.navigation} item={item}></HorarioCard>}
                         keyExtractor={item => item._id}
                     />
                 </SafeAreaView>

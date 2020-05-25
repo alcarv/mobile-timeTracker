@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB, ALTER_CALENDAR } from '../actions/types';
+import { LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB, ALTER_CALENDAR, SELECTED_HORARIO } from '../actions/types';
 import { createCalendarArray } from '../../view/shared/CalendarProcessor';
 
 const initialState = {
@@ -15,7 +15,11 @@ const initialState = {
         dia: new Date().getDate(),
         mes: new Date().getMonth() + 1
     },
-    tiles: []
+    tiles: [],
+    selectedHorario: {
+        hora:'',
+        data: ''
+    }
 }
 
 const authReducer = (state = initialState, action) => {
@@ -57,6 +61,11 @@ const authReducer = (state = initialState, action) => {
                 tiles: createCalendarArray(state.selectedEstab.configuracoes.inicio, state.selectedEstab.configuracoes.fim, state.selectedEstab.configuracoes.duracao, state.selectedEstab.horarios.filter(horario => {
                     return ((new Date(horario.dia).getDate() == action.data.dia) && ((new Date(horario.dia).getMonth() + 1) == action.data.mes))
                 }))
+            }
+        case SELECTED_HORARIO:
+            return {
+                ...state,
+                selectedHorario: action.data
             }
         default:
             return state;

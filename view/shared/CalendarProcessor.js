@@ -1,5 +1,4 @@
 export const createCalendarArray = (inicio, fim, duracao, horariosDoDia) => {
-    console.log(horariosDoDia)
     const arrLength = ((fim - inicio) * 60) / duracao;
     const arr = [];
 

@@ -30,7 +30,7 @@ class EstabelecimentoInfos extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <Headercomponent titulo={this.props.selectedType.nome} ></Headercomponent>  
+                <Headercomponent navigation={this.props.navigation} init={false} titulo={this.props.selectedType.nome} ></Headercomponent>  
                 <Image source={{uri: this.props.selectedType.url}} style={styles.estabImage}/>
                 <Text style={styles.nomeTxt}>{this.props.selectedEstab.nome}</Text>
                 <ScrollView style={styles.areaDesc}>

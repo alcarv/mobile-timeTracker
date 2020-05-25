@@ -1,10 +1,26 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
 
 class Headercomponent extends Component{
 
     constructor(props) {
         super(props);
+    }
+
+    back = () =>{
+        this.props.navigation.goBack()
+    }
+
+    createLogo = () => {
+        if(this.props.init){
+            return <Text style={styles.logo}>Time Tracker</Text>
+        }else{
+            return (
+                <TouchableOpacity style={styles.imgTouch} onPress={this.back}>
+                    <Image source={require('../../assets/back.png')} style={{height: 20, width: 20}}></Image>
+                </TouchableOpacity>
+            )
+        }
     }
 
     createTitle = () => {
@@ -18,7 +34,9 @@ class Headercomponent extends Component{
     render(){
         return (
             <View style={styles.header}>
-                <Text style={styles.logo}>Time Tracker</Text>
+                {
+                   this.createLogo()
+                }
                 {
                    this.createTitle()
                 }
