@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, FlatList } from 'react-native';
-import { connect } from 'react-redux';
+import { StyleSheet, View, Text, FlatList, SafeAreaView } from 'react-native';
 import Headercomponent from '../shared/header';
-import HorarioCard from '../shared/horarioCard';
 import Calendarcomponent from '../shared/Calendarcomponent';
+import { connect } from 'react-redux';
+import { createCalendarArray } from '../shared/CalendarProcessor';
+import HorarioCard from '../shared/horarioCard';
 
-class EstabelecimentoHomeComponent extends Component{
+
+class HorariosComponent extends Component{
 
     constructor(props) {
         super(props);
     }
 
     render(){
-        return(
+        return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Headercomponent init={true} navigation={this.props.navigation} cor="branco" titulo="Seus Horários" />
+                    <Headercomponent navigation={this.props.navigation} init={false} cor="branco" titulo="Escolha um horário" />
                 </View>
                 <Calendarcomponent/>
                 <SafeAreaView style={styles.safeView}>
@@ -24,13 +26,14 @@ class EstabelecimentoHomeComponent extends Component{
                         columnWrapperStyle={styles.list}
                         ItemSeparatorComponent={() => <Text></Text>}
                         data={this.props.tiles}
-                        renderItem={({ item }) => <HorarioCard navigation={this.props.navigation} estab={true} item={item}></HorarioCard>}
+                        renderItem={({ item }) => <HorarioCard estab={false} navigation={this.props.navigation} item={item}></HorarioCard>}
                         keyExtractor={item => item._id}
                     />
                 </SafeAreaView>
             </View>
         )
     }
+
 }
 
 const styles = StyleSheet.create({
@@ -57,10 +60,10 @@ const styles = StyleSheet.create({
 
 const mapStatetoProps = (state) => {
     return {
-      loggedEstab: state.authReducer.loggedEstab,
-      calendar: state.authReducer.calendar,
-      tiles: state.authReducer.tiles
+        selectedEstab: state.authReducer.selectedEstab,
+        calendar: state.authReducer.calendar,
+        tiles: state.authReducer.tiles
     }
-  }
+}
 
-export default connect(mapStatetoProps, null)(EstabelecimentoHomeComponent);
+export default connect(mapStatetoProps, null)(HorariosComponent);

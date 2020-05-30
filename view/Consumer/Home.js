@@ -30,7 +30,7 @@ class ConsumerHomeComponent extends Component {
             return;
         }
 
-        axios.get(`${url.dev}/estabelecimento/filtro/tipo/${text}`)
+        axios.get(`${url.prod}/estabelecimento/filtro/tipo/${text}`)
         .then(res => {
             this.setState({arrTipos: res.data})
         })
@@ -40,7 +40,7 @@ class ConsumerHomeComponent extends Component {
     }
 
     pegarTodosOsTipos = () => {
-        axios.get(`${url.dev}/estabelecimento/tipos`)
+        axios.get(`${url.prod}/estabelecimento/tipos`)
         .then(res => {
             this.setState({arrTipos: res.data})
         })
@@ -52,7 +52,7 @@ class ConsumerHomeComponent extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <Headercomponent titulo="Estabelecimento" ></Headercomponent>  
+                <Headercomponent init={true} navigation={this.props.navigation} titulo="Estabelecimento" ></Headercomponent>  
                 <View style={styles.search}>
                     <TextInput maxLength={20} style={styles.buscaInput} placeholderTextColor="black" placeholder="Filtre seus locais favoritos" 
                     onChangeText={text => this.changeSearch(text)} value={this.state.busca}></TextInput>

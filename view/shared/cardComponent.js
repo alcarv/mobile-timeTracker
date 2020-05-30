@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
-import { SelectType } from '../../redux/actions/auth';
+import { SelectType, SelectEstab } from '../../redux/actions/auth';
 
 class CardComponent extends Component {
 
@@ -11,11 +11,14 @@ class CardComponent extends Component {
 
     navegar = () => {
         if(this.props.parent == "home"){
-            this.props.selecionar({
+            this.props.selecionarTipo({
                 nome: this.props.nome.charAt(0).toUpperCase() + this.props.nome.slice(1),
                 url: this.props.imgUrl
             });
             this.props.navigation.navigate('PorTipo');
+        }else if(this.props.parent == "porTipo"){
+            this.props.selecionarEstab(this.props.estab);
+            this.props.navigation.navigate('infosEstab');
         }
     }
 
@@ -58,7 +61,12 @@ const styles = StyleSheet.create({
 
 const mapDispatchtoProps = (dispatch) => {
     return {
-        selecionar: (selectedType) => dispatch(SelectType(selectedType))
+        selecionarTipo: (selectedType) => {
+            dispatch(SelectType(selectedType))
+        },
+        selecionarEstab: (estab) => {
+            dispatch(SelectEstab(estab))
+        }
     }
 }
 

@@ -22,7 +22,7 @@ class EstabelecimentoPorTipoComponent extends Component {
     }
 
     pegarTodosOsEstabelecimentos = () => {
-        axios.get(`${url.dev}/estabelecimento/${this.props.selectedType.nome}`)
+        axios.get(`${url.prod}/estabelecimento/${this.props.selectedType.nome}`)
         .then(res => {
             this.setState({arrEstab: res.data})
         })
@@ -39,7 +39,7 @@ class EstabelecimentoPorTipoComponent extends Component {
             return;
         }
 
-        axios.get(`${url.dev}/estabelecimento/${text}/${this.props.selectedType.nome}`)
+        axios.get(`${url.prod}/estabelecimento/${text}/${this.props.selectedType.nome.toLowerCase()}`)
         .then(res => {
             this.setState({arrEstab: res.data})
         })
@@ -51,7 +51,7 @@ class EstabelecimentoPorTipoComponent extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <Headercomponent titulo={this.props.selectedType.nome} ></Headercomponent>  
+                <Headercomponent navigation={this.props.navigation} init={false} titulo={this.props.selectedType.nome} ></Headercomponent>  
                 <View style={styles.search}>
                     <TextInput maxLength={20} style={styles.buscaInput} placeholderTextColor="black" placeholder="Filtre seus locais favoritos" 
                     onChangeText={text => this.changeSearch(text)} value={this.state.busca}></TextInput>
@@ -62,7 +62,7 @@ class EstabelecimentoPorTipoComponent extends Component {
                         columnWrapperStyle={styles.list}
                         ItemSeparatorComponent={() => <Text></Text>}
                         data={this.state.arrEstab}
-                        renderItem={({ item }) => <CardComponent style={styles.card} nome={item.nome} imgUrl={this.props.selectedType.url}/>}
+                        renderItem={({ item }) => <CardComponent style={styles.card} navigation= {this.props.navigation} nome={item.nome} imgUrl={this.props.selectedType.url} estab={item} parent="porTipo"/>}
                         keyExtractor={item => item._id}
                     />    
                 </SafeAreaView>
