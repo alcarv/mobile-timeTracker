@@ -8,7 +8,7 @@ class ThanksComponent extends Component{
     }
 
     voltar = () => {
-        this.props.navigation.popToTop()
+        this.props.navigation.navigate('ConsumerHome');
     }
 
     render(){

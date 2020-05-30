@@ -11,7 +11,7 @@ class InfosAgendamento extends Component{
         super(props);
         this.state = {
             servico: this.props.selectedEstab.valores[0],
-            formaPgto: 'card'
+            formaPgto: 'Cartão'
         }
     }
 
@@ -79,8 +79,8 @@ class InfosAgendamento extends Component{
                                         formaPgto: itemValue
                                     })
                                 }}>
-                                <Picker.Item label="Cartão" value="card" />
-                                <Picker.Item label="Dinheiro" value="cash" />
+                                <Picker.Item label="Cartão" value="Cartão" />
+                                <Picker.Item label="Dinheiro" value="Dinheiro" />
                             </Picker>
                         </View>
                     </View>

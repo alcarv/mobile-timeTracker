@@ -52,7 +52,7 @@ class ConsumerHomeComponent extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <Headercomponent init={true} titulo="Estabelecimento" ></Headercomponent>  
+                <Headercomponent init={true} navigation={this.props.navigation} titulo="Estabelecimento" ></Headercomponent>  
                 <View style={styles.search}>
                     <TextInput maxLength={20} style={styles.buscaInput} placeholderTextColor="black" placeholder="Filtre seus locais favoritos" 
                     onChangeText={text => this.changeSearch(text)} value={this.state.busca}></TextInput>

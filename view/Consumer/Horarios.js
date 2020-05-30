@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, FlatList, SafeAreaView } from 'react-native';
 import Headercomponent from '../shared/header';
-import Calendarcomponent from './Calendarcomponent';
+import Calendarcomponent from '../shared/Calendarcomponent';
 import { connect } from 'react-redux';
 import { createCalendarArray } from '../shared/CalendarProcessor';
-import HorarioCard from './horarioCard';
+import HorarioCard from '../shared/horarioCard';
 
 
 class HorariosComponent extends Component{
@@ -26,7 +26,7 @@ class HorariosComponent extends Component{
                         columnWrapperStyle={styles.list}
                         ItemSeparatorComponent={() => <Text></Text>}
                         data={this.props.tiles}
-                        renderItem={({ item }) => <HorarioCard navigation={this.props.navigation} item={item}></HorarioCard>}
+                        renderItem={({ item }) => <HorarioCard estab={false} navigation={this.props.navigation} item={item}></HorarioCard>}
                         keyExtractor={item => item._id}
                     />
                 </SafeAreaView>
@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
     },
     safeView: {
         height: '65%',
-        width: '100%'
+        width: '100%',
+        marginLeft: '2%'
     }
 })
 

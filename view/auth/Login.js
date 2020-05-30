@@ -2,7 +2,8 @@ import { StyleSheet, Text, View, ImageBackground, TouchableHighlight, TextInput 
 import React, { useState, Component } from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux'
-import {Login} from '../../redux/actions/auth'
+import {Login, LoginEstab} from '../../redux/actions/auth'
+import Loader from '../shared/loading';
 
 const url = require('../../environments')
 
@@ -13,14 +14,22 @@ class LoginComponent extends React.Component {
       this.state = {
         user: 'Consumidor',
         login: '',
-        senha: ''
+        senha: '',
+        loading: false
       };
+    }
+
+    clickCadastro = () => {
+      this.props.navigation.navigate('Cadastro');
     }
 
     clickLogin = () => {
       if(this.state.login == '' || this.state.login == undefined || this.state.senha == '' || this.state.senha == undefined){
         alert('Preencha os campos!');
       }else{
+        this.setState({
+          loading: true
+        })
         if(this.state.user == 'Consumidor'){
           axios.post(`${url.prod}/auth/consumidor/login`, { 
             "email": this.state.login, 
@@ -31,12 +40,27 @@ class LoginComponent extends React.Component {
                 nome: res.data[0].nome,
                 email: res.data[0].email
               })
+              this.setState({
+                loading: false,
+                login: '',
+                senha: '',
+              })
               this.props.navigation.navigate('ConsumerHome');
             }else{
+              this.setState({
+                loading: false,
+                login: '',
+                senha: '',
+              })
               alert('E-mail ou Senha inválidos. Caso não possua cadastro, cadastre-se abaixo');
             }
           }).catch(err => {
-            console.log(err);
+            this.setState({
+              loading: false,
+                login: '',
+                senha: '',
+            })
+            alert('Desculpe, ocorreu um erro inesperado. Tente novamente mais tarde.');
           })
         }else{
           axios.post(`${url.prod}/auth/estabelecimento/login`, { 
@@ -44,16 +68,28 @@ class LoginComponent extends React.Component {
             "pswd": this.state.senha
           }).then(res => {
             if(res.data.length > 0){ 
-              this.props.logar({
-                nome: res.data[0].nome,
-                email: res.data[0].email
+              this.props.logarEstab(res.data[0])
+              this.setState({
+                loading: false,
+                login: '',
+                senha: '',
               })
               this.props.navigation.navigate('EstabelecimentoHome');
             }else{
+              this.setState({
+                loading: false,
+                login: '',
+                senha: '',
+              })
               alert('E-mail ou Senha inválidos. Caso não possua cadastro, cadastre-se abaixo');
             }
           }).catch(err => {
-            console.log(err);
+            this.setState({
+              loading: false,
+                login: '',
+                senha: '',
+            })
+            alert('Desculpe, ocorreu um erro inesperado. Tente novamente mais tarde.');
           })
         }
       }
@@ -74,6 +110,10 @@ class LoginComponent extends React.Component {
     render() {
         return(
           <ImageBackground source={require('../../assets/background_cropped.jpg')} style={styles.container}>
+          <Loader loading={this.state.loading} />
+          <TouchableHighlight underlayColor="#ff5448" onPress={this.clickCadastro} style={styles.botaoCadastrar}>
+            <Text style={styles.botaoCadastrarText}>Cadastrar-se</Text>
+          </TouchableHighlight> 
           <Text style={styles.logo}>Time Tracker</Text>
           <View style={styles.login}> 
             <Text style={styles.LoginText}>Seus horários na palma da mão</Text>
@@ -160,12 +200,29 @@ class LoginComponent extends React.Component {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center"
+    },
+    botaoCadastrar:{
+      position: 'absolute',
+      top: '8%',
+      right: '8%',
+      backgroundColor: "#ff5448",
+      borderRadius: 10,
+      height: "5%",
+      width: "30%",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    botaoCadastrarText:{
+      color: "#fff",
+      fontSize: 16
     }
   });
 
   const mapDispatchtoProps = (dispatch) => {
     return {
-      logar: (user) => dispatch(Login(user))
+      logar: (user) => dispatch(Login(user)),
+      logarEstab: (estab) => dispatch(LoginEstab(estab))
     }
   }
 

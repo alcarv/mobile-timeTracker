@@ -40,6 +40,12 @@ export const createCalendarArray = (inicio, fim, duracao, horariosDoDia) => {
         horariosDoDia.forEach(horarioDoDia => {
             if(((x.inicioHora == horarioDoDia.horario.split(':')[0]) && (x.inicioMinuto == horarioDoDia.horario.split(':')[1]))){
                 x.reservado = true;
+                x.cliente = horarioDoDia.cliente;
+                x.email = horarioDoDia.email;
+                x.formaPgto = horarioDoDia.formaPgto;
+                x.horario = horarioDoDia.horario;
+                x.dia = horarioDoDia.dia;
+                x.servico = horarioDoDia.servico;
             }
         });
 
