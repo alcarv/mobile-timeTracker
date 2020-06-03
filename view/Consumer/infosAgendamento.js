@@ -108,15 +108,10 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: '#FF473A'
     },
-    header:{
-        position: 'absolute',
-        top: '4%'
-    },
     infosAgendamento:{
         display: "flex",
         flexDirection: 'column',
-        alignItems: "center",
-        marginTop: '25%'
+        alignItems: "center"
     },
     interaction:{
         display: 'flex',

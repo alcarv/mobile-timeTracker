@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB, ALTER_CALENDAR, SELECTED_HORARIO, LOGIN_ESTAB, SELECTED_HORARIO_INFOS, REFRESH_TILES } from '../actions/types';
+import { LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB, ALTER_CALENDAR, SELECTED_HORARIO, LOGIN_ESTAB, SELECTED_HORARIO_INFOS, REFRESH_TILES, SELECT_TYPE_CADASTRO } from '../actions/types';
 import { createCalendarArray } from '../../view/shared/CalendarProcessor';
 
 const url = require('../../environments')
@@ -21,9 +21,10 @@ const initialState = {
     tiles: [],
     selectedHorario: {
         hora:'',
-        data: ''
+        data: '' 
     },
-    selectedHorarioInfos: {}
+    selectedHorarioInfos: {},
+    selectedTypeCadastro: 'Estabelecimento'
 }
 
 const authReducer = (state = initialState, action) => {
@@ -89,18 +90,23 @@ const authReducer = (state = initialState, action) => {
                 selectedHorarioInfos: action.data
             }
         case REFRESH_TILES:
-                  return {
-                        ...state,
-                        selectedEstab: action.data.estab,
-                        loggedEstab: action.data.estab,
-                        calendar:{
-                            dia: new Date().getDate(),
-                            mes: new Date().getMonth() + 1
-                        },
-                        tiles: createCalendarArray(action.data.estab.configuracoes.inicio, action.data.estab.configuracoes.fim, action.data.estab.configuracoes.duracao, action.data.estab.horarios.filter(horario => {
-                            return ((new Date(horario.dia).getDate() == new Date().getDate()) && ((new Date(horario.dia).getMonth() + 1) == (new Date().getMonth() + 1)))
-                        }))
-                    }
+            return {
+                ...state,
+                selectedEstab: action.data.estab,
+                loggedEstab: action.data.estab,
+                calendar:{
+                    dia: new Date().getDate(),
+                    mes: new Date().getMonth() + 1
+                },
+                tiles: createCalendarArray(action.data.estab.configuracoes.inicio, action.data.estab.configuracoes.fim, action.data.estab.configuracoes.duracao, action.data.estab.horarios.filter(horario => {
+                    return ((new Date(horario.dia).getDate() == new Date().getDate()) && ((new Date(horario.dia).getMonth() + 1) == (new Date().getMonth() + 1)))
+                }))
+            }
+        case SELECT_TYPE_CADASTRO:
+            return {
+                ...state,
+                selectedTypeCadastro: action.data
+            }
         default:
             return state;
     }
