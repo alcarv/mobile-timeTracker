@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB, ALTER_CALENDAR, SELECTED_HORARIO, LOGIN_ESTAB, SELECTED_HORARIO_INFOS, REFRESH_TILES} from './types'
+import {LOGIN, LOGOUT, SELECT_TYPE, SELECT_ESTAB, ALTER_CALENDAR, SELECTED_HORARIO, LOGIN_ESTAB, SELECTED_HORARIO_INFOS, REFRESH_TILES, SELECT_TYPE_CADASTRO} from './types'
 
 export const Login = (user) => (
     {
@@ -61,5 +61,12 @@ export const RefreshTiles = (nav) =>
     {
         type: REFRESH_TILES,
         data: nav
+    }
+)
+
+export const SelectTypeCadastro = (type) => (
+    {
+        type: SELECT_TYPE_CADASTRO,
+        data: type
     }
 )
