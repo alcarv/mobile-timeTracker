@@ -118,7 +118,7 @@ class LoginComponent extends React.Component {
           <View style={styles.login}> 
             <Text style={styles.LoginText}>Seus horários na palma da mão</Text>
             <TouchableHighlight underlayColor="#ff5448" onPress={this.clickSwitch} style={styles.botaoSwitch}> 
-              <Text>{this.state.user}</Text>
+              <Text style={{fontSize: 20}}>{this.state.user}</Text>
             </TouchableHighlight>
             <View style={styles.loginInputView} >
               <TextInput style={styles.loginInput} placeholderTextColor="black" placeholder="Login" onChangeText={text => this.setState({login: text})} value={this.state.login}></TextInput>
@@ -169,7 +169,7 @@ class LoginComponent extends React.Component {
     },
     botaoLoginText: {
       color: "#fff",
-      fontSize: 20
+      fontSize: 24
     },
     LoginText:{
       fontSize: 20,
@@ -179,18 +179,21 @@ class LoginComponent extends React.Component {
       textShadowRadius: 10
     },
     loginInput: {
-      width: "60%",
       borderColor: "black",
       borderWidth: 1,
       borderRadius: 10,
       textAlign: 'center',
       backgroundColor: "#fff",
-      width: "70%"
+      width: "70%",
+      height: '40%',
+      fontSize: 19
     },
     loginInputView:{
       width:"100%",
       flexDirection: "column",
-      alignItems: "center" 
+      alignItems: "center",
+      justifyContent: 'space-around',
+      height: '30%'
     },
     botaoSwitch:{
       backgroundColor: "#ff5448",

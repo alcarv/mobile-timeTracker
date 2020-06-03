@@ -20,7 +20,7 @@ class Headercomponent extends Component{
     createLogo = () => {
         if(this.props.init){
             return (
-                <TouchableOpacity onPress={this.logout}>
+                <TouchableOpacity style={styles.logoView} onPress={this.logout}>
                     <Text style={styles.logo}>Logout</Text>
                 </TouchableOpacity>
             )
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         width: '100%',
         display: "flex",
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: "space-around"
     },
     icone:{
@@ -78,8 +78,14 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     logo: {
-        fontSize: 8,
+        fontSize: 12,
         textAlign: "left"
+    },
+    logoView:{
+        width: '15%'
+    },
+    imgTouch:{
+        width: '10%'
     }
 });
 
